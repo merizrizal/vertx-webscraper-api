@@ -8,6 +8,7 @@ import io.vertx.rxjava3.ext.web.Router
 import io.vertx.rxjava3.ext.web.RoutingContext
 import org.jsoup.Jsoup
 import org.jsoup.nodes.Document
+import java.text.SimpleDateFormat
 
 class HttpServerVerticle : AbstractVerticle() {
     override fun start(promise: Promise<Void>) {
@@ -25,10 +26,13 @@ class HttpServerVerticle : AbstractVerticle() {
     }
 
     private fun crawl(context: RoutingContext) {
+        val responses = JsonArray()
+        // https://www.geekwire.com/startups/
+        // https://techstartups.com/
+
+
         val document = Jsoup.connect("https://www.cnbc.com/startups/").get()
         val pageRowElements = document.select("div.PageBuilder-pageRow")
-
-        val responses = JsonArray()
 
         for (pageRowElement in pageRowElements) {
             val moduleHeaderTitle = pageRowElement.selectFirst("h2.ModuleHeader-title")
@@ -40,10 +44,14 @@ class HttpServerVerticle : AbstractVerticle() {
                     val title = element.selectFirst("a.Card-title")
                     val datePost = element.selectFirst("span.Card-time")
 
+                    val dateFormat = SimpleDateFormat("EEE, MMM d yyyy")
+                    val dateString = datePost?.text()?.replace("st|nd|rd|th".toRegex(), "")
+                    val date = dateFormat.parse(dateString)
+
                     responses.add(JsonObject().apply {
                         put("title", title?.text())
                         put("link", title?.attr("href"))
-                        put("date_post", datePost?.text())
+                        put("timestamp", date.time)
                     })
                 }
             }
