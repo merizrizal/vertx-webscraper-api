@@ -10,7 +10,7 @@ buildscript {
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
     }
 
-    group = 'com.webscraper'
+    group = 'com.merizrizal'
     version = '1.0.0'
 }
 
