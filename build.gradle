@@ -1,0 +1,74 @@
+buildscript {
+    ext.kotlin_version = '1.6.10'
+    ext.vertx_version = '4.2.5'
+
+    repositories {
+        mavenCentral()
+    }
+
+    dependencies {
+        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
+    }
+
+    group = 'com.webscraper'
+    version = '1.0.0'
+}
+
+plugins {
+    id 'org.jetbrains.kotlin.jvm' version '1.6.10'
+    id 'java'
+}
+
+repositories {
+    mavenCentral()
+}
+
+sourceCompatibility = JavaVersion.VERSION_11
+targetCompatibility = JavaVersion.VERSION_11
+
+dependencies {
+    // Kotlin
+    implementation 'org.jetbrains.kotlin:kotlin-stdlib'
+
+    // Vertx Core
+    implementation "io.vertx:vertx-core:$vertx_version"
+    implementation "io.vertx:vertx-lang-kotlin:$vertx_version"
+
+    // Vertx Web
+    implementation "io.vertx:vertx-web:$vertx_version"
+
+    // Vertx Rxjava
+    implementation "io.vertx:vertx-rx-java3:$vertx_version"
+    implementation "io.vertx:vertx-rx-java3-gen:$vertx_version"
+
+    // Jsoup
+    implementation 'org.jsoup:jsoup:1.14.3'
+}
+
+jar {
+    duplicatesStrategy = DuplicatesStrategy.EXCLUDE
+
+    manifest {
+        attributes 'Implementation-Title': rootProject.name
+        attributes 'Implementation-Version': archiveVersion
+        attributes 'Main-Class': 'AppKt'
+    }
+
+    from {
+        configurations.runtimeClasspath.collect { it.isDirectory() ? it : zipTree(it) }
+    }
+}
+
+task cleanAndJar {
+    group = 'build'
+    description = 'Clean and create jar'
+
+    dependsOn clean
+    dependsOn jar
+}
+
+compileKotlin {
+    kotlinOptions {
+        jvmTarget = JavaVersion.VERSION_11
+    }
+}
