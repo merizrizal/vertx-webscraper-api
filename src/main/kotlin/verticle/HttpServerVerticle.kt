@@ -30,7 +30,7 @@ class HttpServerVerticle : AbstractVerticle() {
     private fun scrape(context: RoutingContext) {
         val responses = JsonArray()
 
-        responses.addAll(scrapeCnbC())
+        responses.addAll(scrapeCnbc())
         responses.addAll(scrapeGeekWire())
         responses.addAll(scrapeTechStartups())
 
@@ -40,7 +40,7 @@ class HttpServerVerticle : AbstractVerticle() {
         context.response().end(responses.encode())
     }
 
-    private fun scrapeCnbC(): JsonArray {
+    private fun scrapeCnbc(): JsonArray {
         val responses = JsonArray()
 
         val document = Jsoup.connect("https://www.cnbc.com/startups/").get()
