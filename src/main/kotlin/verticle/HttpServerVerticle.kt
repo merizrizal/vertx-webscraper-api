@@ -43,7 +43,9 @@ class HttpServerVerticle : AbstractVerticle() {
     private fun scrapeCnbc(): JsonArray {
         val responses = JsonArray()
 
-        val document = Jsoup.connect("https://www.cnbc.com/startups/").get()
+        val document = Jsoup.connect("https://www.cnbc.com/startups/")
+            .userAgent("Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:109.0) Gecko/20100101 Firefox/118.0")
+            .get()
         val pageRowElements = document.select("div.PageBuilder-pageRow")
 
         for (pageRowElement in pageRowElements) {
@@ -79,7 +81,9 @@ class HttpServerVerticle : AbstractVerticle() {
     private fun scrapeGeekWire(): JsonArray {
         val responses = JsonArray()
 
-        val document = Jsoup.connect("https://www.geekwire.com/startups/").get()
+        val document = Jsoup.connect("https://www.geekwire.com/startups/")
+            .userAgent("Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:109.0) Gecko/20100101 Firefox/118.0")
+            .get()
         val articleElements = document.select("article.type-post")
 
         for (articleElement in articleElements) {
@@ -107,7 +111,9 @@ class HttpServerVerticle : AbstractVerticle() {
     private fun scrapeTechStartups(): JsonArray {
         val responses = JsonArray()
 
-        val document = Jsoup.connect("https://techstartups.com/").get()
+        val document = Jsoup.connect("https://techstartups.com/")
+            .userAgent("Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:109.0) Gecko/20100101 Firefox/118.0")
+            .get()
         val postElements = document.select("div.post.type-post")
 
         for (postElement in postElements) {
