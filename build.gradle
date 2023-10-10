@@ -1,6 +1,6 @@
 buildscript {
-    ext.kotlin_version = '1.6.10'
-    ext.vertx_version = '4.2.5'
+    ext.kotlin_version = '1.9.10'
+    ext.vertx_version = '4.4.5'
 
     repositories {
         mavenCentral()
@@ -15,7 +15,7 @@ buildscript {
 }
 
 plugins {
-    id 'org.jetbrains.kotlin.jvm' version '1.6.10'
+    id 'org.jetbrains.kotlin.jvm' version '1.9.10'
     id 'java'
 }
 
@@ -23,8 +23,8 @@ repositories {
     mavenCentral()
 }
 
-sourceCompatibility = JavaVersion.VERSION_11
-targetCompatibility = JavaVersion.VERSION_11
+sourceCompatibility = JavaVersion.VERSION_17
+targetCompatibility = JavaVersion.VERSION_17
 
 dependencies {
     // Kotlin
@@ -42,7 +42,7 @@ dependencies {
     implementation "io.vertx:vertx-rx-java3-gen:$vertx_version"
 
     // Jsoup
-    implementation 'org.jsoup:jsoup:1.14.3'
+    implementation 'org.jsoup:jsoup:1.16.1'
 }
 
 jar {
@@ -69,6 +69,6 @@ task cleanAndJar {
 
 compileKotlin {
     kotlinOptions {
-        jvmTarget = JavaVersion.VERSION_11
+        jvmTarget = JavaVersion.VERSION_17
     }
 }
