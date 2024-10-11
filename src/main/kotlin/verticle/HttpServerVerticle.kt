@@ -91,14 +91,17 @@ class HttpServerVerticle : AbstractVerticle() {
                 val title = articleElement.selectFirst("h2.entry-title > a")
                 val datePost = articleElement.selectFirst("time.published")
 
+                /* Don't have date post now
                 val dateFormat = SimpleDateFormat("MMM d, yyyy")
                 val dateString = datePost?.text()
                 val date = dateFormat.parse(dateString)
 
+                 */
+
                 responses.add(JsonObject().apply {
                     put("title", title?.text())
                     put("link", title?.attr("href"))
-                    put("timestamp", date.time)
+                    put("timestamp", "")
                 })
             } catch (e: Exception) {
                 logger.error(e.message)
